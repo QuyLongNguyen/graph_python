@@ -38,10 +38,10 @@ def breath_first_travel(graph, node, visited=set(), visit_queue=[]):
         breath_first_travel(graph, visit_queue.pop(0), visited, visit_queue)
 
 
-def breath_first_search(graph, node, key, found=False, visited=set(), visit_queue=[]):
+def breath_first_search(graph, node, key, visited=set(), visit_queue=[],path=[]):
     if node == key:
-        found = True
-        return found
+        path.append(node)
+        return path
 
     # visited block
     if node not in visited:
@@ -51,11 +51,10 @@ def breath_first_search(graph, node, key, found=False, visited=set(), visit_queu
                 print(neighbor)
                 visit_queue.append(neighbor)
 
-    # check all nodes are visited,
-    # should put this after "visited block" because visit_queue empty when first function call
-    if not visit_queue:
-        return False
-    return breath_first_search(graph, visit_queue.pop(0), key, found, visited, visit_queue)
+    breath_first_search(graph,visit_queue.pop(0),key,visited,visit_queue,path)
+    if path:
+        path.append(node)
+    return path
 
 
 if __name__ == "__main__":
@@ -68,4 +67,4 @@ if __name__ == "__main__":
              'G': [],
              'H': []}
 
-    print(breath_first_search(graph, 'A', 'H'))
+    print(breath_first_search(graph, 'A', 'K'))
